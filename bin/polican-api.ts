@@ -3,18 +3,13 @@ import * as cdk from 'aws-cdk-lib';
 import { PolicanApiStack } from '../lib/polican-api-stack';
 
 const app = new cdk.App();
-new PolicanApiStack(app, 'PolicanApiStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
 
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+// テスト環境用スタック
+new PolicanApiStack(app, 'PolicanApiStack-Test', {
+  env: { account: process.env.TEST_ACCOUNT, region: process.env.TEST_REGION },
+});
 
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
-
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+// 本番環境用スタック
+new PolicanApiStack(app, 'PolicanApiStack-Prod', {
+  env: { account: process.env.PROD_ACCOUNT, region: process.env.PROD_REGION },
 });
