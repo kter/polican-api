@@ -25,6 +25,7 @@ export class PolicanApiStack extends Stack {
     // DynamoDBテーブルの作成
     const table = new dynamodb.Table(this, 'MyDynamoDBTable', {
       partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING },
+      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST, // オンデマンドに設定
     });
 
     // DynamoDBをデータソースとしてAppSyncに追加
