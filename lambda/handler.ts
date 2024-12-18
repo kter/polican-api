@@ -36,12 +36,22 @@ export const handler = async (event: any) => {
       // DynamoDBからアイテムを取得するロジックを追加
       const item = await getItemFromDynamoDB(id);
   
-      if (!item || !item.dateOfBirth) {
-        throw new Error('dateOfBirth is required to calculate age.');
+      if (!item) {
+        throw new Error('Item not found.');
       }
   
-      const age = calculateAge(item.dateOfBirth);
-      return { id: item.id, name: item.name, dateOfBirth: item.dateOfBirth, age };
+      const age = item.dateOfBirth ? calculateAge(item.dateOfBirth) : null;
+  
+      return {
+        id: item.id,
+        name: item.name,
+        dateOfBirth: item.dateOfBirth,
+        partyId: item.partyId,
+        birthplace: item.birthplace,
+        candidacyRegion: item.candidacyRegion,
+        electionDistrict: item.electionDistrict,
+        age
+      };
     }
   
     if (fieldName === 'putItem') {

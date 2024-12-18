@@ -46,7 +46,11 @@ export class PolicanApiStack extends Stack {
           },
           "attributeValues": {
             "name": $util.dynamodb.toDynamoDBJson($ctx.args.name),
-            "dateOfBirth": $util.dynamodb.toDynamoDBJson($ctx.args.dateOfBirth)
+            "dateOfBirth": $util.dynamodb.toDynamoDBJson($ctx.args.dateOfBirth),
+            "partyId": $util.dynamodb.toDynamoDBJson($ctx.args.partyId),
+            "birthplace": $util.dynamodb.toDynamoDBJson($ctx.args.birthplace),
+            "candidacyRegion": $util.dynamodb.toDynamoDBJson($ctx.args.candidacyRegion),
+            "electionDistrict": $util.dynamodb.toDynamoDBJson($ctx.args.electionDistrict)
           }
         }
       `),
@@ -59,7 +63,7 @@ export class PolicanApiStack extends Stack {
     const ageResolverFunction = new lambdaNodejs.NodejsFunction(this, 'AgeResolverFunction', {
       runtime: lambda.Runtime.NODEJS_22_X,
       entry: 'lambda/handler.ts', // エントリーポイントを指定
-      handler: 'handler', // エクスポ���トされた関数名
+      handler: 'handler', // エクスポートされた関数名
       environment: {
         DYNAMODB_TABLE_NAME: table.tableName, // 環境変数を設定
       },

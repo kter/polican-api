@@ -7,7 +7,7 @@ type Politician {
   birthplace: String!        # 出身地
   candidacyRegion: String!   # 立候補地
   electionDistrict: String!  # 選挙区
-  age: Int!                  # 動的計算による年齢
+  age: Int                   # 動的計算による年齢（オプショナルに変更）
 }
 
 # 政党情報
@@ -63,5 +63,14 @@ type Mutation {
   # 新しい政党の追加
   addParty(name: String!): Party
 
-  putItem(id: ID!, name: String!, dateOfBirth: String!): Politician
+  # putItemミューテーションの更新
+  putItem(
+    id: ID!
+    name: String!
+    dateOfBirth: String!
+    partyId: ID!
+    birthplace: String!
+    candidacyRegion: String!
+    electionDistrict: String!
+  ): Politician
 }
