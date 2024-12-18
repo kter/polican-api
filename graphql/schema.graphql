@@ -1,12 +1,67 @@
+# 政治家の基本情報
+type Politician {
+  id: ID!                    # 一意の識別子
+  name: String!              # 名前
+  dateOfBirth: String!       # 生年月日（例: YYYY-MM-DD形式）
+  party: Party               # 現在の所属政党
+  birthplace: String!        # 出身地
+  candidacyRegion: String!   # 立候補地
+  electionDistrict: String!  # 選挙区
+  age: Int!                  # 動的計算による年齢
+}
+
+# 政党情報
+type Party {
+  id: ID!                    # 一意の識別子
+  name: String!              # 政党名
+}
+
+# クエリ
 type Query {
-  getItem(id: ID!): Item
+  # 政治家をIDで取得
+  getPoliticianById(id: ID!): Politician
+
+  # 名前で政治家を検索（部分一致）
+  searchPoliticiansByName(name: String!): [Politician!]!
+
+  # 所属政党で政治家を検索
+  getPoliticiansByParty(partyId: ID!): [Politician!]!
+
+  # 選挙区で政治家を検索
+  getPoliticiansByDistrict(district: String!): [Politician!]!
+
+  # すべての政党を取得
+  getAllParties: [Party!]!
+
+  # getItemクエリの追加
+  getItem(id: ID!): Politician
 }
 
+# ミューテーション
 type Mutation {
-  putItem(id: ID!, name: String!): Item
-}
+  # 政治家情報の追加
+  addPolitician(
+    name: String!
+    dateOfBirth: String!
+    partyId: ID!
+    birthplace: String!
+    candidacyRegion: String!
+    electionDistrict: String!
+  ): Politician
 
-type Item {
-  id: ID!
-  name: String
+  # 政治家情報の更新
+  updatePolitician(
+    id: ID!
+    name: String
+    dateOfBirth: String
+    partyId: ID
+    birthplace: String
+    candidacyRegion: String
+    electionDistrict: String
+  ): Politician
+
+  # 新しい政党の追加
+  addParty(name: String!): Party
+
+  putItem(id: ID!, name: String!, dateOfBirth: String!): Politician
 }
